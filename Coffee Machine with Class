@@ -1,0 +1,167 @@
+package machine
+
+fun main() {
+    val myCoffee = CoffeeMachine()
+    var action = ""
+    while (action != "exit") {
+        println("Write action (buy, fill, take, remaining, exit):")
+        action = readln()
+        myCoffee.currentAction(action)
+    }
+
+}
+
+class CoffeeMachine {
+    var hasWater = 400
+    var hasMilk = 540
+    var hasCoffee = 120
+    var hasEmptyCups = 9
+    var hasMoney = 550
+    var action = ""
+
+    fun currentAction(action: String) {
+        when (action) {
+            "buy" -> {
+                println()
+                buy()
+            }
+            "fill" -> {
+                println()
+                fill()
+            }
+            "take" -> {
+                println()
+                takeMoney()
+            }
+            "remaining" -> {
+                println()
+                hasNow()
+            }
+            else -> {  }
+        }
+    }
+
+    private fun hasNow() {
+        println("""
+    The coffee machine has:
+    $hasWater ml of water
+    $hasMilk ml of milk
+    $hasCoffee g of coffee beans
+    $hasEmptyCups disposable cups
+    ${'$'}$hasMoney of money    
+    """.trimIndent())
+        println()
+    }
+
+    fun buy() {
+        println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:")
+        val num = readln()
+        when (num) {
+            "1" -> espresso()
+            "2" -> latte()
+            "3" -> cappuccino()
+            "back" -> {
+                println()
+                currentAction(action)
+            }
+            else -> buy()
+        }
+    }
+
+    private fun espresso() {
+        if (this.hasWater - 250 >= 0 && this.hasCoffee - 16 >= 0 && this.hasEmptyCups > 0) {
+            println("I have enough resources, making you a coffee!")
+            this.hasWater -= 250
+            this.hasCoffee -= 16
+            this.hasMoney += 4
+            this.hasEmptyCups--
+            println()
+        } else if (this.hasWater < 250) {
+            println("Sorry, not enough water!\n")
+        } else if (this.hasCoffee < 16) {
+            println("Sorry, not enough coffee beans!\n")
+        } else {
+            println("Sorry, not enough disposable cups!\n")
+        }
+    }
+
+    private fun latte() {
+        if (this.hasWater - 350 >= 0 && this.hasMilk - 75 >= 0 && this.hasCoffee - 20 >= 0 && this.hasEmptyCups > 0) {
+            println("I have enough resources, making you a coffee!")
+            this.hasWater -= 350
+            this.hasMilk -= 75
+            this.hasCoffee -= 20
+            this.hasMoney += 7
+            this.hasEmptyCups--
+            println()
+        } else if (this.hasWater < 350) {
+            println("Sorry, not enough water!\n")
+        } else if (this.hasMilk < 75) {
+            println("Sorry, not enough milk!\n")
+        } else if (this.hasCoffee < 20) {
+            println("Sorry, not enough coffee beans!\n")
+        } else {
+            println("Sorry, not enough disposable cups!\n")
+        }
+    }
+
+    private fun cappuccino() {
+        if (this.hasWater - 200 >= 0 && this.hasMilk - 100 >= 0 && this.hasCoffee - 12 >= 0 && this.hasEmptyCups > 0) {
+            println("I have enough resources, making you a coffee!")
+            this.hasWater -= 200
+            this.hasMilk -= 100
+            this.hasCoffee -= 12
+            this.hasMoney += 6
+            this.hasEmptyCups--
+            println()
+        } else if (this.hasWater < 200) {
+            println("Sorry, not enough water!\n")
+        } else if (this.hasMilk < 100) {
+            println("Sorry, not enough milk!\n")
+        } else if (this.hasCoffee < 12) {
+            println("Sorry, not enough coffee beans!\n")
+        } else {
+            println("Sorry, not enough disposable cups!\n")
+        }
+    }
+
+    private fun fill() {
+        println("Write how many ml of water you want to add:")
+        val addWater = readln().toInt()
+        this.hasWater += addWater
+        println("Write how many ml of milk you want to add:")
+        val addMilk = readln().toInt()
+        this.hasMilk += addMilk
+        println("Write how many grams of coffee beans you want to add:")
+        val addCoffee = readln().toInt()
+        this.hasCoffee += addCoffee
+        println("Write how many disposable cups you want to add:")
+        val addEmptyCups = readln().toInt()
+        this.hasEmptyCups += addEmptyCups
+        println()
+    }
+
+    private fun takeMoney() {
+        println("I gave you \$${hasMoney}")
+        this.hasMoney = 0
+        println()
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

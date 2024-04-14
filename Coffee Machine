@@ -1,0 +1,147 @@
+package machine
+
+fun main() {
+
+    currentAction()
+
+}
+
+var hasWater = 400
+var hasMilk = 540
+var hasCoffee = 120
+var hasEmptyCups = 9
+var hasMoney = 550
+var action = ""
+
+fun hasNow() {
+    println("""
+    The coffee machine has:
+    $hasWater ml of water
+    $hasMilk ml of milk
+    $hasCoffee g of coffee beans
+    $hasEmptyCups disposable cups
+    ${'$'}$hasMoney of money    
+    """.trimIndent())
+    println()
+}
+
+fun currentAction() {
+    while (action != "exit") {
+        println("Write action (buy, fill, take, remaining, exit):")
+        action = readln()
+        when (action) {
+            "buy" -> {
+                println()
+                buy()
+            }
+            "fill" -> {
+                println()
+                fill()
+            }
+            "take" -> {
+                println()
+                takeMoney()
+            }
+            "remaining" -> {
+                println()
+                hasNow()
+            }
+            "exit" -> break
+            else -> action = ""
+        }
+    }
+}
+
+fun buy() {
+    println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:")
+    val num = readln()
+    when (num) {
+        "1" -> espresso()
+        "2" -> latte()
+        "3" -> cappuccino()
+        "back" -> {
+            println()
+            currentAction()
+        }
+        else -> buy()
+    }
+}
+
+fun espresso() {
+    if (hasWater - 250 >= 0 && hasCoffee - 16 >= 0 && hasEmptyCups > 0) {
+        println("I have enough resources, making you a coffee!")
+        hasWater -= 250
+        hasCoffee -= 16
+        hasMoney += 4
+        hasEmptyCups--
+        println()
+    } else if (hasWater < 250) {
+        println("Sorry, not enough water!\n")
+    } else if (hasCoffee < 16) {
+        println("Sorry, not enough coffee beans!\n")
+    } else {
+        println("Sorry, not enough disposable cups!\n")
+    }
+}
+
+fun latte() {
+    if (hasWater - 350 >= 0 && hasMilk - 75 >= 0 && hasCoffee - 20 >= 0 && hasEmptyCups > 0) {
+        println("I have enough resources, making you a coffee!")
+        hasWater -= 350
+        hasMilk -= 75
+        hasCoffee -= 20
+        hasMoney += 7
+        hasEmptyCups--
+        println()
+    } else if (hasWater < 350) {
+        println("Sorry, not enough water!\n")
+    } else if (hasMilk < 75) {
+        println("Sorry, not enough milk!\n")
+    } else if (hasCoffee < 20) {
+        println("Sorry, not enough coffee beans!\n")
+    } else {
+        println("Sorry, not enough disposable cups!\n")
+    }
+}
+
+fun cappuccino() {
+    if (hasWater - 200 >= 0 && hasMilk - 100 >= 0 && hasCoffee - 12 >= 0 && hasEmptyCups > 0) {
+        println("I have enough resources, making you a coffee!")
+        hasWater -= 200
+        hasMilk -= 100
+        hasCoffee -= 12
+        hasMoney += 6
+        hasEmptyCups--
+        println()
+    } else if (hasWater < 200) {
+        println("Sorry, not enough water!\n")
+    } else if (hasMilk < 100) {
+        println("Sorry, not enough milk!\n")
+    } else if (hasCoffee < 12) {
+        println("Sorry, not enough coffee beans!\n")
+    } else {
+        println("Sorry, not enough disposable cups!\n")
+    }
+}
+
+fun fill() {
+    println("Write how many ml of water you want to add:")
+    val addWater = readln().toInt()
+    hasWater += addWater
+    println("Write how many ml of milk you want to add:")
+    val addMilk = readln().toInt()
+    hasMilk += addMilk
+    println("Write how many grams of coffee beans you want to add:")
+    val addCoffee = readln().toInt()
+    hasCoffee += addCoffee
+    println("Write how many disposable cups you want to add:")
+    val addEmptyCups = readln().toInt()
+    hasEmptyCups += addEmptyCups
+    println()
+}
+
+fun takeMoney() {
+    println("I gave you \$${hasMoney}")
+    hasMoney = 0
+    println()
+}
